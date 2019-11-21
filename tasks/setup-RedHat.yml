@@ -1,0 +1,23 @@
+---
+- name: Remove current php modules
+  yum:
+    name: ['php', 'php-common']
+    state: absent
+
+- name: Installing epel-release package
+  yum:
+    name: epel-release
+    state: present
+
+- name: Installing IUS repo
+  yum:
+    name: https://repo.ius.io/ius-release-el7.rpm
+    state: present
+
+- name: Install php72u pagakces
+  yum:
+    name: ['php71u', 'libc-client']
+
+- name: Install php modules
+  yum:
+    name: "{{ php_modules }}"

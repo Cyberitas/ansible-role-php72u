@@ -1,0 +1,55 @@
+---
+# Variable setup.
+- name: Include base PHP packages and define php_modules.
+  set_fact:
+    php_modules: "{{ __php_modules | list }}"
+  when: php_modules is not defined
+
+- name: Include project specific PHP packages php_modules_additional.
+  set_fact:
+    php_modules: "{{ php_modules | list + php_modules_additional | list }}"
+  when: php_modules_additional is defined
+
+- name: Define extra php_modules.
+  set_fact:
+    php_modules: "{{ php_modules | list + php_modules_devel | list }}"
+  when: php_modules_devel is defined
+
+# Setup/install tasks.
+- name: Remove current php modules
+  yum:
+    name: ['php', 'php-common']
+    state: absent
+
+- name: Installing epel-release package
+  yum:
+    name: epel-release
+    state: present
+
+- name: Installing IUS repo
+  yum:
+    name: https://repo.ius.io/ius-release-el7.rpm
+    state: present
+
+- name: Install php72u pagakces
+  yum:
+    name: ['php72u', 'libc-client']
+
+- name: Install php modules
+  yum:
+    name: "{{ php_modules }}"
+
+# Configuration settings
+- name: Define php.ini path when php_ini_path is not set
+  set_fact:
+    php_ini_path: "{{ __php_ini_path }}"
+  when: php_ini_path is not defined
+
+- name: Place PHP configuration file in place.
+  template:
+    src: php.ini.j2
+    dest: "{{ php_ini_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart webserver

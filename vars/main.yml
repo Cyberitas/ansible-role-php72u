@@ -1,0 +1,31 @@
+---
+__php_modules:
+  - php72u-bcmath
+  - php72u-cli
+  - php72u-common
+  - php72u-fpm
+  - php72u-gd
+  - php72u-imap
+  - php72u-ldap
+  - php72u-mbstring
+  - php72u-opcache
+  - php72u-pecl-imagick
+  - php72u-pdo
+  - php72u-pdo-dblib
+  - php72u-pecl-apcu
+  - php72u-process
+  - php72u-json
+  - php72u-xml
+  - php72u-xmlrpc
+
+# php72u-mcrypt
+
+__web_service: "httpd"
+
+__conf_paths:
+  - /etc
+
+__conf_paths_additional:
+  - /etc/php.d
+
+__php_ini_path: /etc/php.ini
