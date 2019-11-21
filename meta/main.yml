@@ -1,6 +1,6 @@
 galaxy_info:
   author: James Dugger
-  role_name: php72-remi
+  role_name: php72-ius
   description: Ansible role for installing php 72 on RHEL/CentOs
   company: Cyberitas Technologies, LLC
   license: license (MIT)
